@@ -39,7 +39,18 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	/*************************************************/
 	else if (!strcmp(cmd, "pwd")) 
 	{
-		
+        if(num_arg)
+        {
+            illegal_cmd = TRUE;
+        }
+        else{
+            if (getcwd(pwd, sizeof(pwd)) == NULL){
+              perror("");
+                exit(1);
+            }
+            else
+                printf("%s\n", pwd);
+        }
 	}
 	
 	/*************************************************/

@@ -16,10 +16,10 @@
 class Jobs
 {
     public :
-    Jobs(char* name,pid_t pid);
+    Jobs(string name,pid_t pid);
     
     public:
-    char* _jobName;
+    string _jobName;
     pid_t _pid;
     time_t _startTime;
 };

@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <time.h>
 
-Jobs::Jobs(char* name,pid_t pid){
-    _jobName = new char [strlen(name)];
+Jobs::Jobs(string name,pid_t pid){
+    _jobName = name;
     _pid = pid;
     _startTime = time(NULL);
     ctime(&_startTime);
