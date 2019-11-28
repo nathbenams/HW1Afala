@@ -1,6 +1,8 @@
 //		commands.c
 //********************************************
 #include "commands.h"
+extern HistoryCommands history;
+extern char* previousCd;
 //********************************************
 // function name: ExeCmd
 // Description: interperts and executes built-in commands
@@ -33,7 +35,32 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 /*************************************************/
 	if (!strcmp(cmd, "cd") ) 
 	{
-		
+        if(num_arg != 1){
+            illegal_cmd = TRUE;
+        }
+        else{
+            char* currDir;
+            if(( currDir=getcwd(NULL, 0)) == NULL){
+                perror("");
+                exit(1);
+            }
+            if(!strcmp("-", args[1])){
+                if(previousCd != NULL){
+                    chdir(previousCd);
+                    cout << previousCd << endl;
+                    previousCd = currDir; // CHECK VALGRIND !
+                }
+            }
+            else{
+                int resultChdir = chdir(args[1]);
+                if(!resultChdir){
+                    previousCd = currDir;
+                }
+                else if (resultChdir && errno == ENOENT){
+                    cout << "smash error:> \"" << args[1] << "\"-path not found" << endl;
+                }
+            }
+        }
 	} 
 	
 	/*************************************************/

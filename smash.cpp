@@ -19,7 +19,8 @@ main file. This file contains the main function of smash
 HistoryCommands history;
 string L_Fg_Cmd;
 ListOfJobs* jobs; //This represents the list of jobs. Please change to a preferred type (e.g array of char*)
-char lineSize[MAX_LINE_SIZE]; 
+char lineSize[MAX_LINE_SIZE];
+char* previousCd;
 //**************************************************************************************
 // function name: main
 // Description: main function of smash. get command from user and calls command functions
@@ -47,6 +48,7 @@ int main(int argc, char *argv[])
     history = HistoryCommands();
     
     L_Fg_Cmd = string("");
+    previousCd = NULL;
 //	L_Fg_Cmd =(char*)malloc(sizeof(char)*(MAX_LINE_SIZE+1));
 //	if (L_Fg_Cmd == NULL)
 //			exit (-1);
