@@ -54,10 +54,6 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	}
 	
 	/*************************************************/
-	else if (!strcmp(cmd, "mkdir"))
-	{
- 		
-	}
 	/*************************************************/
 	
 	else if (!strcmp(cmd, "jobs")) 
@@ -67,7 +63,12 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	/*************************************************/
 	else if (!strcmp(cmd, "showpid")) 
 	{
-		
+        if(num_arg){
+            illegal_cmd = TRUE;
+        }
+        else{
+            printf("smash pid is %d\n",getpid());
+        }
 	}
 	/*************************************************/
 	else if (!strcmp(cmd, "fg")) 
