@@ -12,9 +12,11 @@ main file. This file contains the main function of smash
 #include "signals.h"
 #include "Jobs.h"
 #include "ListOfJobs.h"
+#include "HistoryCommands.h"
 #define MAX_LINE_SIZE 80
 #define MAXARGS 20
 
+HistoryCommands history;
 string L_Fg_Cmd;
 ListOfJobs* jobs; //This represents the list of jobs. Please change to a preferred type (e.g array of char*)
 char lineSize[MAX_LINE_SIZE]; 
@@ -42,7 +44,7 @@ int main(int argc, char *argv[])
 	// Init globals 
     ListOfJobs list_ = ListOfJobs();
     jobs = &list_;
-    
+    history = HistoryCommands();
     
     L_Fg_Cmd = string("");
 //	L_Fg_Cmd =(char*)malloc(sizeof(char)*(MAX_LINE_SIZE+1));
@@ -56,6 +58,7 @@ int main(int argc, char *argv[])
 		fgets(lineSize, MAX_LINE_SIZE, stdin);
 		strcpy(cmdString, lineSize);    	
 		cmdString[strlen(lineSize)-1]='\0';
+        history.addCommandToHistory(lineSize);
 					// perform a complicated Command
 		if(!ExeComp(lineSize)) continue; 
 					// background command	

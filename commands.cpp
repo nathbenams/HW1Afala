@@ -84,7 +84,18 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	else if (!strcmp(cmd, "quit"))
 	{
    		
-	} 
+	}
+    
+    /*************************************************/
+    else if (!strcmp(cmd,"history"))
+    {
+        if(num_arg){
+            illegal_cmd = TRUE;
+        }
+        else{
+            history.printHistory();
+        }
+    }
 	/*************************************************/
 	else // external command
 	{
