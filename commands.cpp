@@ -3,6 +3,7 @@
 #include "commands.h"
 extern HistoryCommands history;
 extern char* previousCd;
+extern ListOfJobs* jobsList;
 //********************************************
 // function name: ExeCmd
 // Description: interperts and executes built-in commands
@@ -85,7 +86,12 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	
 	else if (!strcmp(cmd, "jobs")) 
 	{
- 		
+        if (num_arg) {
+            illegal_cmd=TRUE;
+        }
+        else{
+            jobsList->listJobsPrint();
+        }
 	}
 	/*************************************************/
 	else if (!strcmp(cmd, "showpid")) 

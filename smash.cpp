@@ -18,7 +18,7 @@ main file. This file contains the main function of smash
 
 HistoryCommands history;
 string L_Fg_Cmd;
-ListOfJobs* jobs; //This represents the list of jobs. Please change to a preferred type (e.g array of char*)
+ListOfJobs* jobsList; //This represents the list of jobs. Please change to a preferred type (e.g array of char*)
 char lineSize[MAX_LINE_SIZE];
 char* previousCd;
 //**************************************************************************************
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 	/************************************/
 	// Init globals 
     ListOfJobs list_ = ListOfJobs();
-    jobs = &list_;
+    jobsList = &list_;
     history = HistoryCommands();
     
     L_Fg_Cmd = string("");
@@ -64,9 +64,9 @@ int main(int argc, char *argv[])
 					// perform a complicated Command
 		if(!ExeComp(lineSize)) continue; 
 					// background command	
-	 	if(!BgCmd(lineSize, jobs)) continue; 
+	 	if(!BgCmd(lineSize, jobsList)) continue;
 					// built in commands
-		ExeCmd(jobs, lineSize, cmdString);
+		ExeCmd(jobsList, lineSize, cmdString);
 		
 		/* initialize for next line read*/
 		lineSize[0]='\0';

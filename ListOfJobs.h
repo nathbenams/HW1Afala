@@ -10,17 +10,19 @@
 #define ListOfJobs_hpp
 
 #include <stdio.h>
-using namespace std;
-#include "signals.h"
 #include <iostream>
 #include <vector>
-#include "Jobs.h"
 #include <stdlib.h>
+#include <sys/wait.h>
+using namespace std;
+#include "signals.h"
+#include "Jobs.h"
 
 class ListOfJobs
 {
     public:
     ListOfJobs();
+    void listJobsPrint();
     
     public :
     vector<Jobs> _listJobs;
