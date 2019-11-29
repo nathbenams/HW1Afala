@@ -16,12 +16,15 @@
 class Jobs
 {
     public :
-    Jobs(string name,pid_t pid);
+    Jobs(string name,int pid);
     
     public:
     string _jobName;
-    pid_t _pid;
+    int _pid;
     time_t _startTime;
+    static int nextId;
+    int idJob;
+    
 };
 
 #endif /* Jobs_hpp */

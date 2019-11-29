@@ -10,10 +10,14 @@
 #include "signals.h"
 #include <stdio.h>
 #include <time.h>
+int Jobs::nextId = 0;
+
 
 Jobs::Jobs(string name,pid_t pid){
+    nextId++;
     _jobName = name;
     _pid = pid;
     _startTime = time(NULL);
     ctime(&_startTime);
+    idJob = nextId;
 }

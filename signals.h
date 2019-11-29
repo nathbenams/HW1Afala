@@ -8,8 +8,12 @@
 #include <string.h>
 #include <signal.h>
 #include <string>
+#define TRUE true
+#define FALSE false
 using namespace std;
 
-
+bool setSignalHandler();
+void handler_cntlc(int signum);
+void handler_cntlz(int signum);
 #endif
 
