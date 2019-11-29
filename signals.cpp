@@ -19,7 +19,7 @@ bool setSignalHandler()
     }
     siga_cntlc.sa_mask = maskSet_cntlc;
     siga_cntlz.sa_mask = maskSet_cntlz;
-    if(sigaction(SIGINT,&siga_cntlc,NULL) || sigaction(SIGSTP, &siga_cntlz,NULL)){
+    if(sigaction(SIGINT,&siga_cntlc,NULL) || sigaction(SIGTSTP, &siga_cntlz,NULL)){
         return FALSE;
     }
     return TRUE;
