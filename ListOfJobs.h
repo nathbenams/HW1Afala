@@ -23,6 +23,7 @@ class ListOfJobs
     public:
     ListOfJobs();
     void listJobsPrint();
+    int pidLastJob();
     
     public :
     vector<Jobs> _listJobs;

@@ -4,6 +4,8 @@
 extern HistoryCommands history;
 extern char* previousCd;
 extern ListOfJobs* jobsList;
+extern string L_Fg_Cmd;
+extern int L_Fg_Cmd_Pid;
 //********************************************
 // function name: ExeCmd
 // Description: interperts and executes built-in commands
@@ -106,7 +108,15 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	/*************************************************/
 	else if (!strcmp(cmd, "fg")) 
 	{
-		
+        if(num_arg > 1){
+            illegal_cmd = TRUE;
+        }
+        else{
+            int pid;
+            if(!num_arg){
+            //remove to continue    jobs->pidLastJob();
+            }
+        }
 	} 
 	/*************************************************/
 	else if (!strcmp(cmd, "bg")) 
@@ -156,25 +166,28 @@ void ExeExternal(char *args[MAX_ARG], char* cmdString)
     		case -1: 
 					// Add your code here (error)
 					
-					/* 
-					your code
-					*/
+            perror("");
+            break;
+            
         	case 0 :
                 	// Child Process
                		setpgrp();
-					
+            execv(args[0],args);
+            //if the child process still alive there is an error
+            perror("");
+            exit(1);
+            break;
 			        // Add your code here (execute an external command)
 					
-					/* 
-					your code
-					*/
-			
 			default:
                 	// Add your code here
-					
-					/* 
-					your code
-					*/
+            int status;
+            L_Fg_Cmd = string(args[0]);
+            L_Fg_Cmd_Pid = pID;
+            waitpid(L_Fg_Cmd_Pid, &status, WUNTRACED);
+            //reinitilization
+            L_Fg_Cmd = "";
+            L_Fg_Cmd_Pid = PIDNULL;
 	}
 }
 //**************************************************************************************

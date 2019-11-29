@@ -12,6 +12,7 @@
 #include "ListOfJobs.h"
 #define MAX_LINE_SIZE 80
 #define MAX_ARG 20
+#define PIDNULL -1
 //typedef enum { FALSE , TRUE } bool;
 #define TRUE true
 #define FALSE false

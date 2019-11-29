@@ -15,11 +15,16 @@ main file. This file contains the main function of smash
 #include "HistoryCommands.h"
 #define MAX_LINE_SIZE 80
 #define MAXARGS 20
+#define PIDNULL -1;
 
 HistoryCommands history;
+
 string L_Fg_Cmd;
+int L_Fg_Cmd_Pid; //for the signals use
+
 ListOfJobs* jobsList; //This represents the list of jobs. Please change to a preferred type (e.g array of char*)
 char lineSize[MAX_LINE_SIZE];
+
 char* previousCd;
 //**************************************************************************************
 // function name: main
@@ -48,6 +53,7 @@ int main(int argc, char *argv[])
     history = HistoryCommands();
     
     L_Fg_Cmd = string("");
+    L_Fg_Cmd_Pid=PIDNULL;
     previousCd = NULL;
 //	L_Fg_Cmd =(char*)malloc(sizeof(char)*(MAX_LINE_SIZE+1));
 //	if (L_Fg_Cmd == NULL)
