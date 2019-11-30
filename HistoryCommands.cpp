@@ -20,7 +20,7 @@ HistoryCommands::HistoryCommands()
 //**************************************************************************************
 void HistoryCommands::printHistory(){
     for(int i=0;i<(int)_history.size();i++){
-        cout << _history.at(i) << "\n";
+        cout << _history.at(i) ;
     }
 }
 

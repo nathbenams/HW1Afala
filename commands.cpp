@@ -107,6 +107,26 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
         }
 	}
 	/*************************************************/
+    else if (!strcmp(cmd,"kill")){
+        if(num_arg != 2 || args[1][0] != '-'){
+            illegal_cmd = TRUE;
+        }
+        else{
+            int idJob = atoi(args[2]);
+            int pidJob = jobsList->pidFromId(idJob);
+            if(pidJob == PIDNULL){
+                cout << "smash error: > kill " << idJob<<" – job does not exist" << endl;
+                return 0;
+            }
+            int sigNum = atoi(args[1]+1); //remove '-'
+            bool verifSignal = sendSignal(pidJob, sigNum, args[1]+1);
+            if (!verifSignal) {
+                cout << "smash error: > kill " << idJob << " – cannot send signal" << endl;
+                return 0;
+            }
+        }
+    }
+    /*************************************************/
 	else if (!strcmp(cmd, "fg")) 
 	{
         if(num_arg > 1){
