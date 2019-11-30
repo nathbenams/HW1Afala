@@ -15,5 +15,6 @@ using namespace std;
 bool setSignalHandler();
 void handler_cntlc(int signum);
 void handler_cntlz(int signum);
+bool sendSignal(int pid , int sig , const char* sigName);
 #endif
 

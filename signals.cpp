@@ -35,3 +35,14 @@ void handler_cntlz(int signum)
     
 }
 
+bool sendSignal(int pid , int sig , const char* sigName)
+{
+    printf("signal %s was sent to pid %d\n", sigName,pid);
+    
+    if(kill(pid, sig)==-1){
+        perror("");
+        return FALSE;
+        
+    }
+    return TRUE;
+}
