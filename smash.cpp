@@ -15,7 +15,7 @@ main file. This file contains the main function of smash
 #include "HistoryCommands.h"
 #define MAX_LINE_SIZE 80
 #define MAXARGS 20
-#define PIDNULL -1;
+
 
 HistoryCommands history;
 
@@ -38,7 +38,11 @@ int main(int argc, char *argv[])
 	//signal declaretions
 	//NOTE: the signal handlers and the function/s that sets the handler should be found in siganls.c
 	 /* add your code here */
-	
+	if (!setSignalHandler())
+    {
+        perror("");
+        exit(-1);
+    }
 	/************************************/
 	//NOTE: the signal handlers and the function/s that sets the handler should be found in siganls.c
 	//set your signal handlers here

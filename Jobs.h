@@ -13,9 +13,11 @@
 #include <time.h>
 #include <stdlib.h>
 #include <iostream>
+#define TRUE true
+#define FALSE false
 using namespace std;
-#include "Jobs.h"
-#include "signals.h"
+
+
 
 class Jobs
 {

@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 using namespace std;
-#include "signals.h"
+
 #include "Jobs.h"
 
 class ListOfJobs

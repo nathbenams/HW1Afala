@@ -8,7 +8,7 @@
 #include "signals.h"
 extern string L_Fg_Cmd;
 extern int L_Fg_Cmd_Pid;
-extern ListOfJobs* jobList;
+extern ListOfJobs* jobsList;
 
 bool setSignalHandler()
 {
@@ -33,7 +33,7 @@ void handler_cntlc(int signum)
     if(L_Fg_Cmd_Pid == PIDNULL){
         return;
     }
-    jobList->removeJobFromPid(L_Fg_Cmd_Pid);
+    jobsList->removeJobFromPid(L_Fg_Cmd_Pid);
     bool verifSendSignal = sendSignal(L_Fg_Cmd_Pid, SIGINT, "SIGINT");
     if(!verifSendSignal){
         exit(1);
@@ -55,8 +55,8 @@ void handler_cntlz(int signum)
     if(!verifSendSignal){
         exit(1);
     }
-    jobList->addJobToList(L_Fg_Cmd_Pid, L_Fg_Cmd);
-    jobList->setJobStoppedFromPid(L_Fg_Cmd_Pid, TRUE);
+    jobsList->addJobToList(L_Fg_Cmd_Pid, L_Fg_Cmd);
+    jobsList->setJobStoppedFromPid(L_Fg_Cmd_Pid, TRUE);
     L_Fg_Cmd_Pid = PIDNULL;
     L_Fg_Cmd = "";
     return;

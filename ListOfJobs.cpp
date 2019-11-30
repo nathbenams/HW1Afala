@@ -109,10 +109,11 @@ void ListOfJobs::removeJobFromPid(int pid)
         if(_listJobs.at(i)._pid == pid){
             _listJobs.erase(_listJobs.begin()+i);
         }
+        i++;
     }
 }
 
 void ListOfJobs::addJobToList(int pid, string cmd)
 {
-    _listJobs.push_back(Jobs(cmd,pid));
+    _listJobs.push_back(Jobs(cmd, pid));
 }

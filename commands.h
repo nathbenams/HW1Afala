@@ -10,6 +10,8 @@
 #include <sys/wait.h>
 #include "HistoryCommands.h"
 #include "ListOfJobs.h"
+#include "Jobs.h"
+#include "signals.h"
 #define MAX_LINE_SIZE 80
 #define MAX_ARG 20
 #define PIDNULL -1
