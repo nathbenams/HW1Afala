@@ -104,10 +104,15 @@ int ListOfJobs::pidLastJobStopped()
 
 void ListOfJobs::removeJobFromPid(int pid)
 {
-    
+    unsigned long i=0;
+    while (i < _listJobs.size()) {
+        if(_listJobs.at(i)._pid == pid){
+            _listJobs.erase(_listJobs.begin()+i);
+        }
+    }
 }
 
 void ListOfJobs::addJobToList(int pid, string cmd)
 {
-    
+    _listJobs.push_back(Jobs(cmd,pid));
 }
