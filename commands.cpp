@@ -74,12 +74,13 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
             illegal_cmd = TRUE;
         }
         else{
-            if (getcwd(pwd, sizeof(pwd)) == NULL){
+            char pwd_command[MAXPWD];
+            if (getcwd(pwd_command, sizeof(pwd_command)) == NULL){
               perror("");
                 exit(1);
             }
             else
-                printf("%s\n", pwd);
+                printf("%s\n", pwd_command);
         }
 	}
 	
@@ -113,9 +114,25 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
         }
         else{
             int pid;
+            
             if(!num_arg){
-            //remove to continue    jobs->pidLastJob();
+                pid = jobsList->pidLastJob();
             }
+            else{
+                pid = jobsList->pidFromId(atoi(args[1]));
+            }
+            if(pid == PIDNULL){
+                return 0;
+            }
+            
+            jobsList->printNameOfJob(pid);
+            
+            if(jobsList->jobIsStopped(pid)==TRUE){
+                jobsList->setJobStoppedFromPid(pid,FALSE);
+                sendSignal(pid,SIGCONT,"SIGCONT");
+            }
+            int status;
+            waitpid(pid,&status,WUNTRACED);
         }
 	} 
 	/*************************************************/

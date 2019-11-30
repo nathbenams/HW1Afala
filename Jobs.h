@@ -22,6 +22,8 @@ class Jobs
     public :
     Jobs(string name,int pid);
     void jobsPrint();
+    void setJobStopped(int newStatus);
+    int isStopped();
     
     public:
     string _jobName;

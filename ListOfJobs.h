@@ -9,6 +9,7 @@
 #ifndef ListOfJobs_hpp
 #define ListOfJobs_hpp
 
+#define PIDNULL -1
 #include <stdio.h>
 #include <iostream>
 #include <vector>
@@ -24,6 +25,10 @@ class ListOfJobs
     ListOfJobs();
     void listJobsPrint();
     int pidLastJob();
+    int pidFromId(int id_io);
+    void printNameOfJob(int pid);
+    void setJobStoppedFromPid(int pid,int newStatus);
+    int jobIsStopped(int pid);
     
     public :
     vector<Jobs> _listJobs;

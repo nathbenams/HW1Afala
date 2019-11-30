@@ -6,6 +6,12 @@
 //
 
 #include "HistoryCommands.h"
+
+
+HistoryCommands::HistoryCommands()
+{
+    
+}
 //**************************************************************************************
 // function name: printHistory
 // Description: Print the content of History

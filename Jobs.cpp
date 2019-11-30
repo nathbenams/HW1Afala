@@ -19,8 +19,8 @@ Jobs::Jobs(string name,pid_t pid){
     _startTime = time(NULL);
     ctime(&_startTime);
     idJob = nextId;
-    finishJob=0;
-    jobStopped=0;
+    finishJob=FALSE;
+    jobStopped=FALSE;
 }
 
 void Jobs::jobsPrint()
@@ -35,4 +35,14 @@ void Jobs::jobsPrint()
         cout << " (Stopped)";
     }
     cout << endl;
+}
+
+void Jobs::setJobStopped(int newStatus)
+{
+    jobStopped = newStatus;
+}
+
+int Jobs::isStopped()
+{
+    return jobStopped;
 }

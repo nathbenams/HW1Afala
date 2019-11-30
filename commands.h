@@ -13,6 +13,7 @@
 #define MAX_LINE_SIZE 80
 #define MAX_ARG 20
 #define PIDNULL -1
+#define MAXPWD 255
 //typedef enum { FALSE , TRUE } bool;
 #define TRUE true
 #define FALSE false
