@@ -30,6 +30,8 @@ class ListOfJobs
     void printNameOfJob(int pid);
     void setJobStoppedFromPid(int pid,int newStatus);
     int jobIsStopped(int pid);
+    void removeJobFromPid(int pid);
+    void addJobToList(int pid, string cmd);
     
     public :
     vector<Jobs> _listJobs;

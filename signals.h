@@ -10,7 +10,9 @@
 #include <string>
 #define TRUE true
 #define FALSE false
+#define PIDNULL -1
 using namespace std;
+#include "ListOfJobs.h"
 
 bool setSignalHandler();
 void handler_cntlc(int signum);

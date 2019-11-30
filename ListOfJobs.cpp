@@ -101,3 +101,13 @@ int ListOfJobs::pidLastJobStopped()
     }
     return PIDNULL;
 }
+
+void ListOfJobs::removeJobFromPid(int pid)
+{
+    
+}
+
+void ListOfJobs::addJobToList(int pid, string cmd)
+{
+    
+}
