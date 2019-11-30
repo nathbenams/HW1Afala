@@ -87,3 +87,17 @@ int ListOfJobs::jobIsStopped(int pid)
     }
     return FALSE;
 }
+
+int ListOfJobs::pidLastJobStopped()
+{
+    if(_listJobs.size() == 0){
+        return PIDNULL;
+    }
+    
+    for(unsigned long i = _listJobs.size()-1 ; i>=0 ; i--){
+        if(_listJobs.at(i).isStopped()){
+            return _listJobs.at(i)._pid;
+        }
+    }
+    return PIDNULL;
+}

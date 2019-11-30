@@ -16,7 +16,7 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 {
 	char* cmd; 
 	char* args[MAX_ARG];
-	char pwd[MAX_LINE_SIZE];
+	//char pwd[MAX_LINE_SIZE];
 	const char* delimiters = " \t\n";
 	int i = 0, num_arg = 0;
 	bool illegal_cmd = FALSE; // illegal command
@@ -138,7 +138,24 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	/*************************************************/
 	else if (!strcmp(cmd, "bg")) 
 	{
-  		
+        if(num_arg>1){
+            illegal_cmd = TRUE;
+        }
+        else{
+            int pid;
+            if (num_arg) {
+                pid = jobsList->pidFromId(atoi(args[1]));
+            }
+            else{
+                pid = jobsList->pidLastJobStopped();
+            }
+            if(pid==PIDNULL){
+                return 0;
+            }
+            jobsList->setJobStoppedFromPid(pid,FALSE);
+            jobsList->printNameOfJob(pid);
+            sendSignal(pid,SIGCONT,"SIGCONT");
+        }
 	}
 	/*************************************************/
 	else if (!strcmp(cmd, "quit"))

@@ -25,6 +25,7 @@ class ListOfJobs
     ListOfJobs();
     void listJobsPrint();
     int pidLastJob();
+    int pidLastJobStopped();
     int pidFromId(int id_io);
     void printNameOfJob(int pid);
     void setJobStoppedFromPid(int pid,int newStatus);
