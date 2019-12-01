@@ -8,6 +8,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 #include "HistoryCommands.h"
 #include "ListOfJobs.h"
 #include "Jobs.h"
