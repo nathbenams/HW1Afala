@@ -93,6 +93,7 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
             illegal_cmd=TRUE;
         }
         else{
+            //jobsList->addJobToList(134, "test");
             jobsList->listJobsPrint();
         }
 	}
@@ -180,7 +181,6 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	/*************************************************/
 	else if (!strcmp(cmd, "quit"))
 	{
-        int wait_res;
         if (num_arg > 1) {//too many arguments
             illegal_cmd = TRUE;
         }
@@ -188,31 +188,7 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
             if (strcmp(args[1], "kill"))
                 illegal_cmd = TRUE;
             else {////quit kill
-                for (int i=0; i< jobsList->_listJobs.size(); i++){
-                    bool proccess_ended =0;
-                    pid_t PID=jobsList->_listJobs.at(i)._pid;
-                    kill(PID, SIGTERM);
-                    cout<<"signal SIGTERM was sent to pid"<<PID<<endl;
-                    for(int j=0; j<5; j++){//waiting part
-                      wait_res= waitpid(PID,NULL,WNOHANG);
-                        if (wait_res == PID){
-                            proccess_ended = 1;
-                            break;
-                        }
-                        else{
-                            sleep(1);
-                        }
-                    }//end inner loop
-                    if (!proccess_ended){
-                        kill(PID, SIGKILL);
-                        cout<<"signal SIGKILL was sent to pid"<<PID<<endl;
-                        wait_res=waitpid(PID,NULL,WNOHANG);
-                        if (wait_res != PID){
-                            perror("quit kill failed");
-                        }
-                    }
-                    jobsList->removeJobFromPid(PID);// remove job from list
-                }//end outer loop
+                jobsList->listKillAll();
                 exit(0);
             }//end quit kill
         }// end 1 argument
@@ -340,9 +316,11 @@ int BgCmd(char* lineSize, void* jobs)
             num_arg++;
     
        }
-	if (lineSize[strlen(lineSize)-2] == '&')
+    //lineSize[strlen(lineSize)-2] == '&'
+	if ((!strcmp(args[num_arg],"&")) && (num_arg!=0))
 	{
-		lineSize[strlen(lineSize)-2] = '\0';
+       
+        //lineSize[strlen(lineSize)-2] = '\0';
 		// Add your code here (execute a in the background)
         if(Command != NULL){
             int pid = fork();

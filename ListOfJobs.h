@@ -15,6 +15,8 @@
 #include <vector>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <signal.h>
+#include <unistd.h>
 using namespace std;
 
 #include "Jobs.h"
@@ -32,6 +34,7 @@ class ListOfJobs
     int jobIsStopped(int pid);
     void removeJobFromPid(int pid);
     void addJobToList(int pid, string cmd);
+    void listKillAll();
     
     public :
     vector<Jobs> _listJobs;

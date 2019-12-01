@@ -18,11 +18,11 @@ int Jobs::nextId = 0;
 // Returns:NO
 //**************************************************************************************
 Jobs::Jobs(string name,pid_t pid){
-    nextId++;
+    idJob=nextId++;
     _jobName = name;
     _pid = pid;
     _startTime = time(NULL);
-    ctime(&_startTime);
+    //ctime(&_startTime);
     idJob = nextId;
     finishJob=FALSE;
     jobStopped=FALSE;

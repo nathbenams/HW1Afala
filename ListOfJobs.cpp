@@ -26,17 +26,17 @@ void ListOfJobs::listJobsPrint()
     }
     int status;
     pid_t resultWait;
-    for(int i =0;i<_listJobs.size()+1;i++){
+    for(int i =0;i<_listJobs.size();i++){
         resultWait = waitpid(_listJobs.at(i)._pid,&status, WNOHANG);
         if (resultWait == -1) {
             perror("");
             exit(1);
         }
-        else if(resultWait==-1){
+        else if(resultWait==0){
             continue;
         }
         else{
-            //remove job
+            _listJobs.erase(_listJobs.begin()+i);
             i--;
         }
     }
@@ -161,4 +161,43 @@ void ListOfJobs::removeJobFromPid(int pid)
 void ListOfJobs::addJobToList(int pid, string cmd)
 {
     _listJobs.push_back(Jobs(cmd, pid));
+}
+
+//********************************************
+// function name: listKillAll
+// Description: send signal SIGTERM and SIGKILL to the jobs
+// Parameters: NO
+// Returns:NO
+//**************************************************************************************
+void ListOfJobs::listKillAll()
+{
+    int wait_res;
+    for (int i=0; i< _listJobs.size(); i++){
+        cout << "[" << _listJobs.at(0).idJob << "] " << _listJobs.at(0)._jobName << "-sending SIGTERM ... ";
+        bool proccess_ended =0;
+        pid_t PID=_listJobs.at(i)._pid;
+        kill(PID, SIGTERM);
+        for(int j=0; j<5; j++){//waiting part
+          wait_res= waitpid(PID,NULL,WNOHANG);
+            if (wait_res == PID){
+                proccess_ended = 1;
+                break;
+            }
+            else{
+                sleep(1);
+            }
+        }//end inner loop
+        if (!proccess_ended){
+            kill(PID, SIGKILL);
+            cout << "(5 sec passed) sending SIGKILL ... ";
+            wait_res=waitpid(PID,NULL,WNOHANG);
+            if (wait_res != PID){
+                perror("quit kill failed");
+            }
+        }
+        
+        cout << "Done." << endl;
+        removeJobFromPid(PID);// remove job from list
+        i--;
+    }//end outer loop
 }
