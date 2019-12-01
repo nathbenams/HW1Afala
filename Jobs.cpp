@@ -11,7 +11,12 @@
 
 int Jobs::nextId = 0;
 
-
+//********************************************
+// function name: Constructor od Jobs
+// Description: constructor
+// Parameters: the name of the command and the pid
+// Returns:NO
+//**************************************************************************************
 Jobs::Jobs(string name,pid_t pid){
     nextId++;
     _jobName = name;
@@ -22,7 +27,12 @@ Jobs::Jobs(string name,pid_t pid){
     finishJob=FALSE;
     jobStopped=FALSE;
 }
-
+//********************************************
+// function name: jobsPrint
+// Description: print all the information of the job
+// Parameters: no
+// Returns:NO
+//**************************************************************************************
 void Jobs::jobsPrint()
 {
     time_t timeCommand = time(NULL);
@@ -36,12 +46,22 @@ void Jobs::jobsPrint()
     }
     cout << endl;
 }
-
+//********************************************
+// function name: setJobStopped
+// Description: Set the indicator of Stopped
+// Parameters: the new status
+// Returns:NO
+//**************************************************************************************
 void Jobs::setJobStopped(int newStatus)
 {
     jobStopped = newStatus;
 }
-
+//********************************************
+// function name: isStopped
+// Description: return if the job is stopped
+// Parameters: no
+// Returns: jobStopped
+//**************************************************************************************
 int Jobs::isStopped()
 {
     return jobStopped;

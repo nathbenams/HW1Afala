@@ -9,7 +9,12 @@
 extern string L_Fg_Cmd;
 extern int L_Fg_Cmd_Pid;
 extern ListOfJobs* jobsList;
-
+//********************************************
+// function name: setSignalHandler
+// Description: initialize the signal handler
+// Parameters: no
+// Returns: true - success,0 - failure
+//**************************************************************************************
 bool setSignalHandler()
 {
     struct sigaction siga_cntlc,siga_cntlz;
@@ -26,7 +31,12 @@ bool setSignalHandler()
     }
     return TRUE;
 }
-
+//********************************************
+// function name: handler_cntlc
+// Description: handle the signal send by CTRL+C
+// Parameters: signum
+// Returns:NO
+//**************************************************************************************
 void handler_cntlc(int signum)
 {
     
@@ -45,7 +55,12 @@ void handler_cntlc(int signum)
     return;
     
 }
-
+//********************************************
+// function name: handler_cntlz
+// Description: handle the signal send by CTRL+Z
+// Parameters: signum
+// Returns:NO
+//**************************************************************************************
 void handler_cntlz(int signum)
 {
     if(L_Fg_Cmd_Pid == PIDNULL){
@@ -61,7 +76,12 @@ void handler_cntlz(int signum)
     L_Fg_Cmd = "";
     return;
 }
-
+//********************************************
+// function name: sendSignal
+// Description: When a signal is send , print wich one to who
+// Parameters: pid of the receiver , the number of the signal and its name
+// Returns:true - success,false - failure
+//**************************************************************************************
 bool sendSignal(int pid , int sig , const char* sigName)
 {
     printf("signal %s was sent to pid %d\n", sigName,pid);
