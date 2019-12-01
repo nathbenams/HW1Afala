@@ -180,8 +180,50 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	/*************************************************/
 	else if (!strcmp(cmd, "quit"))
 	{
+        int wait_res;
+        if (num_arg > 1) {//too many arguments
+            illegal_cmd = TRUE;
+        }
+        else if (num_arg == 1) {
+            if (strcmp(args[1], "kill"))
+                illegal_cmd = TRUE;
+            else {////quit kill
+                for (int i=0; i< jobsList->_listJobs.size(); i++){
+                    bool proccess_ended =0;
+                    pid_t PID=jobsList->_listJobs.at(i)._pid;
+                    kill(PID, SIGTERM);
+                    cout<<"signal SIGTERM was sent to pid"<<PID<<endl;
+                    for(int j=0; j<5; j++){//waiting part
+                      wait_res= waitpid(PID,NULL,WNOHANG);
+                        if (wait_res == PID){
+                            proccess_ended = 1;
+                            break;
+                        }
+                        else{
+                            sleep(1);
+                        }
+                    }//end inner loop
+                    if (!proccess_ended){
+                        kill(PID, SIGKILL);
+                        cout<<"signal SIGKILL was sent to pid"<<PID<<endl;
+                        wait_res=waitpid(PID,NULL,WNOHANG);
+                        if (wait_res != PID){
+                            perror("quit kill failed");
+                        }
+                    }
+                    jobsList->removeJobFromPid(PID);// remove job from list
+                }//end outer loop
+                exit(0);
+            }//end quit kill
+        }// end 1 argument
+        else if (num_arg == 0) {// the command was only quit
+            //pid_t my_pid = getpid();
+            //kill(my_pid, SIGKILL);
+            exit(0);
+        }// end only quit
+    }//end quit
    		
-	}
+	
     
     /*************************************************/
     else if (!strcmp(cmd,"history"))
@@ -191,6 +233,20 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
         }
         else{
             history.printHistory();
+        }
+    }
+    else if(!strcmp(cmd,"mv")){
+        if (num_arg != 2){
+            illegal_cmd = TRUE;
+        }
+        else{
+            int res=rename(args[1],args[2]);
+            if(res){
+                cout<<args[1]<<" has been renamed to "<<args[2] << endl;
+            }
+            else{
+                   perror("renaming failed");
+            }
         }
     }
 	/*************************************************/
@@ -252,15 +308,11 @@ void ExeExternal(char *args[MAX_ARG], char* cmdString)
 //**************************************************************************************
 int ExeComp(char* lineSize)
 {
-	char ExtCmd[MAX_LINE_SIZE+2];
-	char *args[MAX_ARG];
+	//char ExtCmd[MAX_LINE_SIZE+2];
+	//char *args[MAX_ARG];
     if ((strstr(lineSize, "|")) || (strstr(lineSize, "<")) || (strstr(lineSize, ">")) || (strstr(lineSize, "*")) || (strstr(lineSize, "?")) || (strstr(lineSize, ">>")) || (strstr(lineSize, "|&")))
     {
-		// Add your code here (execute a complicated command)
-					
-		/* 
-		your code
-		*/
+        return 0;
 	} 
 	return -1;
 }
@@ -276,11 +328,38 @@ int BgCmd(char* lineSize, void* jobs)
 	char* Command;
 	const char* delimiters = " \t\n";
 	char *args[MAX_ARG];
+    int i = 0, num_arg = 0;
+    Command = strtok(lineSize, delimiters);
+    if (Command == NULL)
+        return 0;
+    args[0] = Command;
+    for (i=1; i<MAX_ARG; i++)
+    {
+        args[i] = strtok(NULL, delimiters);
+        if (args[i] != NULL)
+            num_arg++;
+    
+       }
 	if (lineSize[strlen(lineSize)-2] == '&')
 	{
 		lineSize[strlen(lineSize)-2] = '\0';
 		// Add your code here (execute a in the background)
-					
+        if(Command != NULL){
+            int pid = fork();
+            if(pid == 0){
+                setpgrp();
+                execv(Command,args);
+                perror("execv");
+                exit(1);
+            }
+            else if (pid>0){
+                jobsList->addJobToList(pid,string(Command));
+                return 0;
+            }
+            else{
+                perror("");
+            }
+        }
 		/* 
 		your code
 		*/
