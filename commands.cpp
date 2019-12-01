@@ -26,10 +26,10 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
    	args[0] = cmd;
 	for (i=1; i<MAX_ARG; i++)
 	{
-		args[i] = strtok(NULL, delimiters); 
-		if (args[i] != NULL) 
+		//args[i] = strtok(NULL, delimiters);
+        if (args[i] != NULL){
 			num_arg++; 
- 
+        }
 	}
 /*************************************************/
 // Built in Commands PLEASE NOTE NOT ALL REQUIRED
