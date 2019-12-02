@@ -40,7 +40,7 @@ void Jobs::jobsPrint()
         perror("time :");
         exit(-1);
     }
-    cout << "[" << idJob << "] " << _jobName << " :" << _pid << " " << difftime(timeCommand, _startTime) << " secs" ;
+    cout << "[" << idJob << "] " << _jobName << " " << _pid << " " << difftime(timeCommand, _startTime) << " secs" ;
     if (jobStopped){
         cout << " (Stopped)";
     }
