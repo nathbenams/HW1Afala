@@ -18,18 +18,20 @@ int ExeCmd(void* jobs, char* lineSize, char* cmdString)
 	char* args[MAX_ARG];
 	//char pwd[MAX_LINE_SIZE];
 	const char* delimiters = " \t\n";
-	int i = 0, num_arg = 0;
+	int num_arg = 0;
 	bool illegal_cmd = FALSE; // illegal command
     	cmd = strtok(lineSize, delimiters);
 	if (cmd == NULL)
 		return 0; 
    	args[0] = cmd;
-	for (i=1; i<MAX_ARG; i++)
+    int i=1;
+    while ( i<MAX_ARG)
 	{
 		//args[i] = strtok(NULL, delimiters);
         if (args[i] != NULL){
 			num_arg++; 
         }
+        i++;
 	}
 /*************************************************/
 // Built in Commands PLEASE NOTE NOT ALL REQUIRED
@@ -303,21 +305,21 @@ int BgCmd(char* lineSize, void* jobs)
 
 	char* Command;
 	const char* delimiters = " \t\n";
-	char *args[MAX_ARG];
+	char *args1[MAX_ARG];
     int i = 0, num_arg = 0;
     Command = strtok(lineSize, delimiters);
     if (Command == NULL)
         return 0;
-    args[0] = Command;
+    args1[0] = Command;
     for (i=1; i<MAX_ARG; i++)
     {
-        args[i] = strtok(NULL, delimiters);
-        if (args[i] != NULL)
+        args1[i] = strtok(NULL, delimiters);
+        if (args1[i] != NULL)
             num_arg++;
     
        }
     //lineSize[strlen(lineSize)-2] == '&'
-	if ((!strcmp(args[num_arg],"&")) && (num_arg!=0))
+	if ((!strcmp(args1[num_arg],"&")) && (num_arg!=0))
 	{
        
         //lineSize[strlen(lineSize)-2] = '\0';
@@ -326,7 +328,7 @@ int BgCmd(char* lineSize, void* jobs)
             int pid = fork();
             if(pid == 0){
                 setpgrp();
-                execv(Command,args);
+                execv(Command,args1);
                 perror("execv");
                 exit(1);
             }
